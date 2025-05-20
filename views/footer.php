@@ -1,24 +1,13 @@
- <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: "Tahoma", sans-serif;
-      background-color: #f9f9f9;
-
-      display: flex;
-      flex-direction: column;
-    }
-
-    body > *:not(.site-footer) {
-      flex: 1 0 auto; /* محتوای صفحه فضای خالی را پر می‌کند */
-    }
+  <style>
 
     .site-footer {
       background-color: #222;
       color: #fff;
       padding: 40px 20px 20px;
       text-align: center;
-      flex-shrink: 0; /* از کوچک شدن جلوگیری می‌کند */
+      margin-top: 100px ;
+      position : relative;
+      bottom : 0;
     }
 
     .footer-container {
@@ -60,12 +49,7 @@
       font-size: 13px;
       color: #888;
     }
-  </style>
-
-  <!-- اگر محتوایی داری اینجا قرار بده -->
-  <!-- <main>محتوا</main> -->
-
-  <!-- فوتر سایت -->
+</style>
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-left">

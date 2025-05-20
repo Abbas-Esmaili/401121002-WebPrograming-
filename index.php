@@ -17,7 +17,7 @@ if($uri == "/webprogramming/")
     view('about.php');
 
 }
-if($uri == "/webprogramming/process-form")
+else if($uri == "/webprogramming/process-form")
 {
     view('process-form.php');
 
