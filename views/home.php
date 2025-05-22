@@ -3,7 +3,7 @@ include"header.php";
 ?>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 <section class="flex flex-col justify-center items-center my-20">
-  <form action="/webprogramming/process-form" method="POST" class="flex w-full md:px-5 shadow-lg rounded-xl shadow-blue-200 py-5 px-10 md:w-[28%] space-y-8 flex-col">
+  <form action="/webprogramming/processForm" method="POST" class="flex w-full md:px-5 shadow-lg rounded-xl shadow-blue-200 py-5 px-10 md:w-[28%] space-y-8 flex-col">
       <h1 class="text-center text-4xl my-6">SEND_INFORMATION</h1>
         <div class="flex flex-col space-y-2">
             <label for="name">Name</label>
