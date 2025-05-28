@@ -4,6 +4,9 @@ namespace App\Controller;
 use App\Model\User;
 class FrontController{
     public static function home(){
+        $id = $_GET['id'];
+        $user  = User::find($id);
+        var_dump($user->composite());
         return view('home.php');
     }
     public static function about(){

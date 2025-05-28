@@ -15,7 +15,7 @@ class Route{
     public function dispatch($requestMethod, $requestUri) {
         foreach ($this->routes as $route) {
             if ($route['method'] === $requestMethod && $route['path'] === $requestUri) {
-                return call_user_func($route['handler']);
+                return call_user_func($route['handle']);
             }
         }
         http_response_code(404);
