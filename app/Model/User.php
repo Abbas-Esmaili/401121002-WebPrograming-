@@ -5,8 +5,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model{
     protected $table = 'users';
-    public function composite()
+    protected $fillable = ['name','email','password'];
+    
+    public function posts()
     {
-        return $this->name.' '.$this->email;
+        return $this->hasMany(Post::class);
+    }
+
+    public function composite() {
+        return $this->name . ' ' . $this->email;
     }
 }

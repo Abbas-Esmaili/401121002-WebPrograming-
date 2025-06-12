@@ -11,16 +11,19 @@ class Route{
             'handle' => $handle
         ];
     }
-
-    public function dispatch($requestMethod, $requestUri) {
-        foreach ($this->routes as $route) {
-            if ($route['method'] === $requestMethod && $route['path'] === $requestUri) {
-                return call_user_func($route['handle']);
+    public function dispatch()
+    {
+        $method = $_SERVER['REQUEST_METHOD'];
+        $uri = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
+        foreach($this->routes as $route)
+        {
+            if($route['method'] == $method && $route['path'] == $uri )
+            {
+                call_user_func($route['handle']);
+                return;
             }
         }
-        http_response_code(404);
-        return call_user_func([ \App\Controller\FrontController::class, 'notFound' ]);
     }
+    
 } 
-
 ?>

@@ -4,9 +4,15 @@ namespace App\Controller;
 use App\Model\User;
 class FrontController{
     public static function home(){
-        $id = $_GET['id'];
+        $id = array_key_exists('id',$_GET)? $_GET['id']:0;
         $user  = User::find($id);
-        var_dump($user->composite());
+        if($user)
+        {
+            var_dump($user->composite()); 
+        }else{
+            echo('User not exist');
+        }
+        exit;
         return view('home.php');
     }
     public static function about(){
@@ -15,12 +21,5 @@ class FrontController{
     public static function infs(){
         return view('infs.php');
     }
-    public static function process(){
-        return view('processForm.php');
-    }
-    public static function notFound(){
-        return view('404.php');
-    }
-    
-}
 
+}

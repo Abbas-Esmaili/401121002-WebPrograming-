@@ -1,67 +1,52 @@
 <?php
+session_start();
 define('ROOT_PATH',__DIR__);
 require __DIR__.'/vendor/autoload.php';
 require_once(__DIR__.'/helper/functions.php');
-// require_once(__DIR__.'/app/Route.php');
-
-use Illuminate\Database\Capsule\Manager as Capsule;
-$config = require __DIR__.'/config/database.php';
-$capsule = new Capsule;
-$capsule->addConnection($config);
-// Make this Capsule instance available globally via static methods
-$capsule->setAsGlobal();
-// Setup the Eloquent ORM
-$capsule->bootEloquent();
-
-// $users = Capsule::table('users')->where('id', '>', 4)->get();
-// var_dump($users);
-// exit();
 
 use App\Route;
 use App\Controller\FrontController;
+use App\Controller\AuthController;
+use App\Controller\DashboardController;
+use App\Controller\PostController;
+use App\Controller\LogoutController;
+use Illuminate\Database\Capsule\Manager as Capsule;
+
+$config = require __DIR__.'/config/database.php';
+$capsule = new Capsule;
+$capsule->addConnection($config);
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
 
 $route = new Route();
 $route->addRoute("GET","/webprogramming/",[FrontController::class, 'home']);
 $route->addRoute("GET",'/webprogramming/about',[FrontController::class, 'about']);
 $route->addRoute("GET",'/webprogramming/infs',[FrontController::class, 'infs']);
-$route->addRoute("POST",'/webprogramming/processForm',[FrontController::class, 'process']);
-$route->dispatch($_SERVER['REQUEST_METHOD'], parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+$route->addRoute("GET",'/webprogramming/login',[AuthController::class, 'login']);
+$route->addRoute("POST",'/webprogramming/login',[AuthController::class, 'loginuser']);
+$route->addRoute("GET",'/webprogramming/register',[AuthController::class, 'register']);
+$route->addRoute("GET",'/webprogramming/dashboard',[DashboardController::class, 'index']);
+$route->addRoute("POST",'/webprogramming/register',[AuthController::class, 'storeuser']);
+$route->addRoute("POST", "/webprogramming/logout", [LogoutController::class, 'handle']);
+
+// Routes of CRUD for Post Model
+$route->addRoute("GET",'/webprogramming/post',[PostController::class, 'index']);
+$route->addRoute("GET",'/webprogramming/post/show',[PostController::class, 'show']);
+$route->addRoute("GET",'/webprogramming/post/edit',[PostController::class, 'edit']);
+$route->addRoute("POST",'/webprogramming/post/update',[PostController::class, 'update']);
+$route->addRoute("GET",'/webprogramming/post/create',[PostController::class, 'create']);
+$route->addRoute("POST",'/webprogramming/post/create',[PostController::class, 'store']);
+//test the relation of database
+$route->addRoute("GET",'/webprogramming/test',function(){
 
 
 
+    $id = $_GET['id'];
+    $post = \App\Model\Post::find($id);
+    $user = $post->user;
+    var_dump($user);
+});
 
-
-
-
-// <?php
-// define('ROOT_PATH',__DIR__);
-// require_once(__DIR__.'/helper/functions.php');
-// $method = $_SERVER['REQUEST_METHOD'];
-// $uri = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
-
-// if($uri == "/webprogramming/")
-// {
-//     view('home.php');
-
-// }else if($uri == '/webprogramming/infs')
-// {
-//     view('infs.php');
-
-// }else if($uri == '/webprogramming/about')
-// {
-//     view('about.php');
-
-// }
-// else if($uri == "/webprogramming/process-form")
-// {
-//     view('process-form.php');
-
-// }
-// else{
-//     view('404.php');
-    
-// }
-
+$route->dispatch();
 ?>
-
-
